@@ -1,10 +1,11 @@
-
-import React, { useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import AppLayout from "../components/Layout/AppLayout";
-import ChatInterface from "../components/Chat/ChatInterface";
 
 const Index = () => {
+  const navigate = useNavigate();
+
   return (
     <AppLayout>
       <div className="container py-8 px-4 md:px-8 max-w-7xl mx-auto">
@@ -47,6 +48,26 @@ const Index = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
+              className="flex gap-4 mb-8"
+            >
+              <button
+                onClick={() => navigate("/signin")}
+                className="btn-primary"
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => navigate("/signup")}
+                className="bg-secondary text-secondary-foreground hover:bg-secondary/90 px-4 py-2 rounded-lg transition duration-200 ease-in-out"
+              >
+                Sign Up
+              </button>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
               className="space-y-4"
             >
               <div className="flex items-center">
@@ -82,9 +103,13 @@ const Index = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:col-span-7 glass-panel rounded-2xl overflow-hidden shadow-xl border border-white/5 h-[600px]"
+            className="lg:col-span-7"
           >
-            <ChatInterface />
+            <img 
+              src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+              alt="Career Guidance" 
+              className="rounded-2xl w-full h-[600px] object-cover"
+            />
           </motion.div>
         </div>
         
