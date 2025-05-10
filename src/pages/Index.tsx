@@ -105,11 +105,36 @@ const Index = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="lg:col-span-7"
           >
-            <img 
-              src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-              alt="Career Guidance" 
-              className="rounded-2xl w-full h-[600px] object-cover"
-            />
+            <div className="glass-panel rounded-2xl overflow-hidden shadow-xl border border-white/5 h-[600px]">
+              <div className="h-full flex flex-col">
+                <div className="p-4 border-b border-white/5">
+                  <h3 className="text-lg font-semibold">Career AI Assistant</h3>
+                </div>
+                <div className="flex-1 p-6 space-y-4 overflow-y-auto">
+                  <div className="chat-message-ai">
+                    Hello! I'm your AI Career Counselor. I can help you explore career paths, analyze your skills, and provide personalized guidance.
+                  </div>
+                  <div className="chat-message-user">
+                    I'm interested in transitioning into tech. Can you help me?
+                  </div>
+                  <div className="chat-message-ai">
+                    Of course! I'd be happy to help you explore tech careers. First, could you tell me about your current background and what areas of tech interest you?
+                  </div>
+                  <div className="chat-message-user">
+                    I have a marketing background and I'm interested in UX design.
+                  </div>
+                  <div className="chat-message-ai">
+                    That's great! Your marketing experience could be very valuable in UX design. Let's explore how your current skills can transfer and what additional skills you might need to develop.
+                  </div>
+                </div>
+                <div className="p-4 border-t border-white/5">
+                  <div className="flex items-center gap-2">
+                    <input type="text" placeholder="Sign in to start chatting..." disabled className="neo-input" />
+                    <button className="btn-primary px-6" disabled>Send</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
         
