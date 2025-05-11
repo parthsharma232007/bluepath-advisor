@@ -1,8 +1,8 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
+import { getChatResponse } from "@/lib/openai";
 
 interface Message {
   id: string;
@@ -33,7 +33,7 @@ const ChatInterface = () => {
     scrollToBottom();
   }, [messages]);
 
-  const handleSendMessage = (messageText: string) => {
+  const handleSendMessage = async (messageText: string) => {
     // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -45,28 +45,30 @@ const ChatInterface = () => {
     setMessages((prev) => [...prev, userMessage]);
     setIsProcessing(true);
     
-    // Simulate AI response after a delay
-    setTimeout(() => {
-      const aiResponses = [
-        "Based on your interests and skills, I would recommend exploring roles in data analysis or UX research.",
-        "Have you considered pursuing additional certification in your field? It could open new opportunities.",
-        "Your experience is well-suited for a transition into project management. Would you like to know more about that path?",
-        "I see potential for you to leverage your communication skills in consultant roles. These positions often value both technical and soft skills.",
-        "Career transitions can feel overwhelming, but breaking it down into smaller steps can make it more manageable. Let's start with identifying your transferable skills.",
-      ];
-      
-      const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+    try {
+      // Get AI response
+      const response = await getChatResponse(messageText);
       
       const aiMessage: Message = {
-        id: Date.now().toString(),
-        text: randomResponse,
+        id: (Date.now() + 1).toString(),
+        text: response || "I apologize, but I'm having trouble processing your request.",
         type: "ai",
         timestamp: new Date(),
       };
       
       setMessages((prev) => [...prev, aiMessage]);
+    } catch (error) {
+      console.error('Error in chat:', error);
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: "I apologize, but I'm having trouble processing your request at the moment. Please try again later.",
+        type: "ai",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
       setIsProcessing(false);
-    }, 1500);
+    }
   };
 
   return (
