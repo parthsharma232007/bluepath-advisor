@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI("AIzaSyBFyT3z2T6-NYKQGXTrUUEN-2MORjzpgD");
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -29,6 +29,10 @@ async function retryWithExponentialBackoff(
 
 export async function getChatResponse(message: string) {
   try {
+    if (!import.meta.env.VITE_GEMINI_API_KEY) {
+      throw new Error('Gemini API key not configured');
+    }
+
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     const result = await retryWithExponentialBackoff(async () => {
@@ -51,6 +55,9 @@ export async function getChatResponse(message: string) {
     console.error('Error getting chat response:', error);
     if (error?.status === 429) {
       return "I apologize, but we've reached our API usage limit. Please try again later or contact support if this persists.";
+    }
+    if (error.message === 'Gemini API key not configured') {
+      return "The application is not properly configured. Please ensure the Gemini API key is set in the environment variables.";
     }
     return "I apologize, but I'm having trouble processing your request at the moment. Please try again later.";
   }
