@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
-import { getChatResponse } from "@/lib/openai";
+import { getChatResponse } from "@/lib/gemini";
 
 interface Message {
   id: string;
